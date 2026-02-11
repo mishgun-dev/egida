@@ -211,4 +211,8 @@ dialog::backdrop {
   .card {
     min-inline-size: 0;
   }
+  .button__close {
+  inline-size: 10px;
+  block-size: 150px;
+}
 }
