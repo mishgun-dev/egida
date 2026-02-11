@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EGIDA - Портал инженерно-технической поддержки</title>
+    <link rel="icon" href="./images/esida.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header__heading">Портал инженерно-технической поддержки</h1>
+    </header>
+    <main class="content">
+      <picture class="content__logo">
+        <img
+          src="./images/esida.svg"
+          alt="Логотип"
+          class="content__logo-image"
+        />
+      </picture>
+      <button class="button" type="button" onclick="window.dialog.showModal()">
+        Сообщить о сбоях в работе
+      </button>
+      <dialog id="dialog">
+        <button class="button__close" onclick="window.dialog.close()"></button>
+        <ul class="dialog__list">
+          <li class="dialog__list-item">
+            <a href="" class="dialog__link">
+              <article class="card card--keeping">
+                <h2 class="card__heading">Цех хранения сырья</h2>
+              </article>
+            </a>
+          </li>
+          <li class="dialog__list-item">
+            <a href="" class="dialog__link">
+              <article class="card card--production">
+                <h2 class="card__heading">Цех изготовления ППУ</h2>
+              </article>
+            </a>
+          </li>
+          <li class="dialog__list-item">
+            <a href="" class="dialog__link">
+              <article class="card card--aging">
+                <h2 class="card__heading">Цех вызревания</h2>
+              </article>
+            </a>
+          </li>
+          <li class="dialog__list-item">
+            <a href="" class="dialog__link">
+              <article class="card card--storage">
+                <h2 class="card__heading">Цех хранения готовых блоков</h2>
+              </article>
+            </a>
+          </li>
+          <li class="dialog__list-item">
+            <a href="" class="dialog__link">
+              <article class="card card--recycling">
+                <h2 class="card__heading">Цех переработки ППУ</h2>
+              </article>
+            </a>
+          </li>
+          <li class="dialog__list-item">
+            <a href="" class="dialog__link">
+              <article class="card card--finished">
+                <h2 class="card__heading">Цех хранения продукции</h2>
+              </article>
+            </a>
+          </li>
+        </ul>
+      </dialog>
+    </main>
+    <footer class="footer"></footer>
+  </body>
+</html>
