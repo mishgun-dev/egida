@@ -169,22 +169,25 @@ dialog::backdrop {
 .button__close {
   position: absolute;
   background-image: url(../images/closeButton.svg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   top: 15px;
   right: 15px;
-  inline-size: 25px;
-  block-size: 15px;
+  inline-size: 40px;
+  block-size: 30px;
 }
 
 .button__close:focus {
-    outline: none;
+  outline: none;
 }
 
 .button__close:focus-visible {
-    outline: 2px solid #000;
+  outline: 2px solid #000;
 }
 
 .b24-window .b24-window-popup-p-right {
-    justify-content: center;
+  justify-content: center;
 }
 
 @starting-style {
@@ -221,7 +224,15 @@ dialog::backdrop {
     min-inline-size: 0;
   }
   .button__close {
-  inline-size: 10px;
-  block-size: 150px;
-}
+    top: 5px;
+  }
+  .card:hover {
+    transform: scale(0.95);
+  }
+  button {
+    transition: transform 0.3s ease;
+  }
+  button:hover {
+    transform: scale(0.95);
+  }
 }
