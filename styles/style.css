@@ -100,11 +100,6 @@ dialog[open] {
   border-radius: 10px;
 }
 
-dialog::backdrop {
-  background-color: #000;
-  opacity: 0.5;
-}
-
 .dialog__list {
   list-style: none;
   display: grid;
