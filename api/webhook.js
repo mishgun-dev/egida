@@ -16,10 +16,10 @@ export default async function handler(req, res) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `${botToken}`
+                'Authorization': botToken
             },
             body: JSON.stringify({
-                user_id: Number(user_id),
+                chat_id: user_id,
                 text: text
             })
         });
