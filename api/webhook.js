@@ -19,7 +19,7 @@ export default async function handler(req, res) {
                 'Authorization': botToken
             },
             body: JSON.stringify({
-                chat_id: user_id,
+                userId: Number(user_id),
                 text: text
             })
         });
