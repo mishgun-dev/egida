@@ -13,6 +13,15 @@
       rel="stylesheet"
     />
     <script src="https://st.max.ru/js/max-web-app.js"></script>
+    <script>
+      if (window.WebApp && window.WebApp.initDataUnsafe && window.WebApp.initDataUnsafe.user) {
+          let maxUserId = window.WebApp.initDataUnsafe.user.id;
+          
+          let currentUrl = new URL(window.location.href);
+          currentUrl.searchParams.set('max_id', maxUserId);
+          window.history.replaceState(null, '', currentUrl.toString());
+      }
+  </script>
   </head>
   <body>
     <header class="header">
@@ -143,17 +152,5 @@
         </ul>
       </dialog>
     </main>
-    <script>
-      let maxUserId = "UNKNOWN";
-      if (window.WebApp && window.WebApp.initDataUnsafe && window.WebApp.initDataUnsafe.user) {
-        maxUserId = window.WebApp.initDataUnsafe.user.id;
-      }
-      window.addEventListener('b24:form:init', (event) => {
-        let form = event.detail.object;
-        form.setProperty("presets", {
-          "UF_CRM_1775560125": maxUserId
-        });
-      });
-    </script>
   </body>
 </html>
