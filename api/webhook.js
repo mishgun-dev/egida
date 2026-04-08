@@ -20,9 +20,8 @@ export default async function handler(req, res) {
                 'Authorization': botToken 
             },
             body: JSON.stringify({
-                // Вот она, правильная вложенная структура!
                 recipient: {
-                    chat_id: chat_id
+                    chat_id: Number(chat_id) 
                 },
                 message: {
                     text: text
