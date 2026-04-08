@@ -22,7 +22,7 @@ export default async function handler(req, res) {
             body: JSON.stringify({
                 // Вот она, правильная вложенная структура!
                 recipient: {
-                    user_id: chat_id
+                    chat_id: chat_id
                 },
                 message: {
                     text: text
