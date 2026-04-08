@@ -1,8 +1,8 @@
 export default async function handler(req, res) {
-    const { user_id, text } = req.query;
+    const { chat_id, text } = req.query;
 
-    if (!user_id || !text) {
-        return res.status(400).json({ error: 'Не переданы обязательные параметры: user_id или text' });
+    if (!chat_id || !text) {
+        return res.status(400).json({ error: 'Не переданы обязательные параметры: chat_id или text' });
     }
 
     const botToken = process.env.MAX_BOT_TOKEN;
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
                 'Authorization': botToken
             },
             body: JSON.stringify({
-                userId: Number(user_id),
+                chat_id: chat_id,
                 text: text
             })
         });
