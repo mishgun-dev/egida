@@ -17,7 +17,7 @@ export default async function handler(req, res) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': botToken // Возвращаем Bearer
+                'Authorization': botToken 
             },
             body: JSON.stringify({
                 // Вот она, правильная вложенная структура!
