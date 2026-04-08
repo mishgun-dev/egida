@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+    // Вы в коде поменяли параметр на chat_id, оставляем его
     const { chat_id, text } = req.query;
 
     if (!chat_id || !text) {
@@ -16,11 +17,16 @@ export default async function handler(req, res) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': botToken
+                'Authorization': `Bearer ${botToken}` // Возвращаем Bearer
             },
             body: JSON.stringify({
-                chat_id: chat_id,
-                text: text
+                // Вот она, правильная вложенная структура!
+                recipient: {
+                    user_id: chat_id
+                },
+                message: {
+                    text: text
+                }
             })
         });
 
