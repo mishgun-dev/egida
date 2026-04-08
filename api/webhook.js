@@ -1,6 +1,10 @@
 export default async function handler(req, res) {
-    // Вы в коде поменяли параметр на chat_id, оставляем его
     const { chat_id, text } = req.query;
+
+    if (req.method !== 'GET' && req.method !== 'POST') {
+        res.setHeader('Allow', 'GET, POST');
+        return res.status(405).json({ error: 'Method Not Allowed' });
+    }
 
     if (!chat_id || !text) {
         return res.status(400).json({ error: 'Не переданы обязательные параметры: chat_id или text' });
@@ -13,25 +17,23 @@ export default async function handler(req, res) {
     }
 
     try {
-        const response = await fetch('https://platform-api.max.ru/messages', {
+        const url = `https://platform-api.max.ru/messages?chat_id=${encodeURIComponent(String(chat_id))}`;
+
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': botToken 
+                // Согласно документации MAX API: Authorization: <token>
+                'Authorization': botToken
             },
             body: JSON.stringify({
-                recipient: {
-                    chat_id: Number(chat_id) 
-                },
-                message: {
-                    text: text
-                }
+                text: String(text)
             })
         });
 
         const data = await response.json();
         
-        return res.status(200).json({ success: true, max_response: data });
+        return res.status(response.status).json({ success: response.ok, max_response: data });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
