@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const url = `https://platform-api.max.ru/messages?chat_id=${encodeURIComponent(String(chat_id))}`;
+        const url = `https://platform-api.max.ru/messages?user_id=${encodeURIComponent(String(chat_id))}`;
 
         const response = await fetch(url, {
             method: 'POST',
