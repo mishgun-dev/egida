@@ -1,0 +1,10 @@
+:root {
+  --app-bg: #f2f4f7;
+  --app-text: #1a1a1a;
+  --app-btn-border: #1a1a1a;
+  --app-btn-hover-bg: #1a1a1a;
+  --app-btn-hover-text: #ffffff;
+  --app-dialog-bg: #ffffff;
+  --app-dialog-text: #000000;
+  --app-card-border: #2c2c2c;
+}

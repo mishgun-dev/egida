@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
     <title>EGIDA - Портал инженерно-технической поддержки</title>
     <link rel="icon" href="./images/esida.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles/variables.css" />
+    <link rel="stylesheet" href="./styles/light-theme.css" media="(prefers-color-scheme: light)" />
     <link rel="stylesheet" href="./styles/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,14 +17,43 @@
     />
     <script src="https://st.max.ru/js/max-web-app.js"></script>
     <script>
-      if (window.WebApp && window.WebApp.initDataUnsafe && window.WebApp.initDataUnsafe.user) {
-          let maxUserId = window.WebApp.initDataUnsafe.user.id;
+      if (window.WebApp) {
+          // Инициализация пользователя
+          if (window.WebApp.initDataUnsafe && window.WebApp.initDataUnsafe.user) {
+              let maxUserId = window.WebApp.initDataUnsafe.user.id;
+              let currentUrl = new URL(window.location.href);
+              currentUrl.searchParams.set('max_id', maxUserId);
+              window.history.replaceState(null, '', currentUrl.toString());
+          }
           
-          let currentUrl = new URL(window.location.href);
-          currentUrl.searchParams.set('max_id', maxUserId);
-          window.history.replaceState(null, '', currentUrl.toString());
+          // Сообщаем мессенджеру, что окно загружено, и разворачиваем на весь экран
+          if (typeof window.WebApp.ready === 'function') window.WebApp.ready();
+          if (typeof window.WebApp.expand === 'function') window.WebApp.expand();
+
+          // Принудительно транслируем параметры темы мессенджера в наши CSS-переменные
+          if (window.WebApp.themeParams) {
+              const applyTheme = () => {
+                  const tp = window.WebApp.themeParams;
+                  const set = (key, val) => { if(val) document.documentElement.style.setProperty(key, val); };
+                  
+                  // Маппинг цветов мессенджера на нашу дизайн-систему
+                  set('--app-bg', tp.bg_color);
+                  set('--app-text', tp.text_color);
+                  set('--app-btn-border', tp.button_color || tp.text_color);
+                  set('--app-btn-hover-bg', tp.button_color || tp.text_color);
+                  set('--app-btn-hover-text', tp.button_text_color || tp.bg_color);
+                  set('--app-dialog-bg', tp.secondary_bg_color || tp.bg_color);
+                  set('--app-dialog-text', tp.text_color);
+                  set('--app-card-border', tp.text_color);
+              };
+              applyTheme();
+              // Если тема меняется динамически на лету
+              if (typeof window.WebApp.onEvent === 'function') {
+                  window.WebApp.onEvent('themeChanged', applyTheme);
+              }
+          }
       }
-  </script>
+    </script>
   </head>
   <body>
     <header class="header">
@@ -35,11 +67,11 @@
           class="content__logo-image"
         />
       </picture>
-      <button class="button" type="button" onclick="window.dialog.show()">
+      <button class="button" type="button" onclick="document.getElementById('dialog').show()">
         Сообщить о сбоях в работе
       </button>
       <dialog id="dialog">
-        <button class="button__close" onclick="window.dialog.close()"></button>
+        <button class="button__close" aria-label="Закрыть" onclick="document.getElementById('dialog').close()"></button>
         <ul class="dialog__list">
           <li class="dialog__list-item">
             <script data-b24-form="click/7/y4679j" data-skip-moving="true">
@@ -55,7 +87,7 @@
                 "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_7.js",
               );
             </script>
-            <article class="card card--keeping">
+            <article class="card card--keeping" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 1. Хранение сырья</h2>
             </article>
           </li>
@@ -73,7 +105,7 @@
                 "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_9.js",
               );
             </script>
-            <article class="card card--production">
+            <article class="card card--production" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 2. Изготовление ППУ</h2>
             </article>
           </li>
@@ -91,7 +123,7 @@
                 "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_11.js",
               );
             </script>
-            <article class="card card--aging">
+            <article class="card card--aging" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 3. Вызревание</h2>
             </article>
           </li>
@@ -109,7 +141,7 @@
                 "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_13.js",
               );
             </script>
-            <article class="card card--storage">
+            <article class="card card--storage" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 4. Хранение готовых блоков</h2>
             </article>
           </li>
@@ -127,7 +159,7 @@
                 "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_3.js",
               );
             </script>
-            <article class="card card--recycling">
+            <article class="card card--recycling" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 5. Переработка ППУ</h2>
             </article>
           </li>
@@ -145,7 +177,7 @@
                 "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_15.js",
               );
             </script>
-            <article class="card card--finished">
+            <article class="card card--finished" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 6. Хранение продукции</h2>
             </article>
           </li>

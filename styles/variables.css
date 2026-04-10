@@ -1,0 +1,11 @@
+:root {
+  --app-bg: linear-gradient(180deg, #010101, #888888);
+  --app-text: #ffffff;
+  --app-btn-border: #ffffff;
+  --app-btn-hover-bg: #ffffff;
+  --app-btn-hover-text: #000000;
+  --app-dialog-bg: #ffffff;
+  --app-dialog-text: #000000;
+  --app-card-border: #000000;
+}
+

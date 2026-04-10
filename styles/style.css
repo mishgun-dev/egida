@@ -4,10 +4,11 @@ a {
 }
 
 body {
+  font-family: inherit;
   font-family: "Montserrat", sans-serif;
-  color: #fff;
+  color: var(--app-text);
   margin: 0 auto;
-  background: linear-gradient(180deg, #010101, #888888);
+  background: var(--app-bg);
   max-inline-size: 1240px;
   min-block-size: 100vb;
   display: flex;
@@ -23,9 +24,10 @@ button {
   padding-block: 10px;
   inline-size: 100%;
   background-color: transparent;
-  border: 3px solid #fff;
+  color: inherit;
+  border: 3px solid var(--app-btn-border);
   cursor: pointer;
-  transition: background-color 0.4s ease;
+  transition: all 0.4s ease;
 }
 
 button:focus {
@@ -33,12 +35,17 @@ button:focus {
 }
 
 button:focus-visible {
-  outline: 3px solid #000;
+  outline: 3px solid var(--app-text);
 }
 
-button:hover {
-  color: #000;
-  background-color: #fff;
+@media (hover: hover) {
+  button:hover {
+    color: var(--app-btn-hover-text);
+    background-color: var(--app-btn-hover-bg);
+  }
+}
+button:active {
+  transform: scale(0.98);
 }
 
 .header {
@@ -90,6 +97,7 @@ dialog[open] {
   opacity: 1;
   position: fixed;
   inset: 0;
+  margin: auto;
   transition: opacity 0.6s ease;
   inline-size: 70%;
   block-size: 70vb;
@@ -98,7 +106,13 @@ dialog[open] {
   justify-content: center;
   flex-wrap: wrap;
   border-radius: 10px;
+  background-color: var(--app-dialog-bg);
+  color: var(--app-dialog-text);
+  z-index: 100;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6);
 }
+
+
 
 .dialog__list {
   list-style: none;
@@ -116,7 +130,7 @@ dialog[open] {
   min-block-size: 180px;
   min-inline-size: 400px;
   border-radius: 10px;
-  border: 3px solid #000;
+  border: 3px solid var(--app-card-border);
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -124,12 +138,19 @@ dialog[open] {
   background-position: center;
   background-repeat: no-repeat;
   box-shadow: 2px 4px 3px 2px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding-inline: 10px;
+  cursor: pointer;
 }
 
-.card:hover {
-  transform: scale(1.05);
+@media (hover: hover) and (min-width: 1024px) {
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.4);
+  }
+}
+.card:active {
+  transform: scale(0.98);
   box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
@@ -209,8 +230,14 @@ dialog[open] {
 }
 
 @media (width <= 675px) {
+  dialog[open] {
+    inline-size: 95%;
+    block-size: 90vb;
+  }
   .dialog__list {
     display: grid;
+    gap: 10px;
+    padding: 10px;
   }
   .dialog__list-item {
     min-inline-size: 100%;
@@ -220,14 +247,5 @@ dialog[open] {
   }
   .button__close {
     top: 5px;
-  }
-  .card:hover {
-    transform: scale(0.95);
-  }
-  button {
-    transition: transform 0.3s ease;
-  }
-  button:hover {
-    transform: scale(0.95);
   }
 }
