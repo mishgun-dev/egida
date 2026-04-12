@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
@@ -7,7 +7,11 @@
     <title>EGIDA - Портал инженерно-технической поддержки</title>
     <link rel="icon" href="./images/esida.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles/variables.css" />
-    <link rel="stylesheet" href="./styles/light-theme.css" media="(prefers-color-scheme: light)" />
+    <link
+      rel="stylesheet"
+      href="./styles/light-theme.css"
+      media="(prefers-color-scheme: light)"
+    />
     <link rel="stylesheet" href="./styles/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,40 +22,42 @@
     <script src="https://st.max.ru/js/max-web-app.js"></script>
     <script>
       if (window.WebApp) {
-          // Инициализация пользователя
-          if (window.WebApp.initDataUnsafe && window.WebApp.initDataUnsafe.user) {
-              let maxUserId = window.WebApp.initDataUnsafe.user.id;
-              let currentUrl = new URL(window.location.href);
-              currentUrl.searchParams.set('max_id', maxUserId);
-              window.history.replaceState(null, '', currentUrl.toString());
-          }
-          
-          // Сообщаем мессенджеру, что окно загружено, и разворачиваем на весь экран
-          if (typeof window.WebApp.ready === 'function') window.WebApp.ready();
-          if (typeof window.WebApp.expand === 'function') window.WebApp.expand();
+        // Инициализация пользователя
+        if (window.WebApp.initDataUnsafe && window.WebApp.initDataUnsafe.user) {
+          let maxUserId = window.WebApp.initDataUnsafe.user.id;
+          let currentUrl = new URL(window.location.href);
+          currentUrl.searchParams.set("max_id", maxUserId);
+          window.history.replaceState(null, "", currentUrl.toString());
+        }
 
-          // Принудительно транслируем параметры темы мессенджера в наши CSS-переменные
-          if (window.WebApp.themeParams) {
-              const applyTheme = () => {
-                  const tp = window.WebApp.themeParams;
-                  const set = (key, val) => { if(val) document.documentElement.style.setProperty(key, val); };
-                  
-                  // Маппинг цветов мессенджера на нашу дизайн-систему
-                  set('--app-bg', tp.bg_color);
-                  set('--app-text', tp.text_color);
-                  set('--app-btn-border', tp.button_color || tp.text_color);
-                  set('--app-btn-hover-bg', tp.button_color || tp.text_color);
-                  set('--app-btn-hover-text', tp.button_text_color || tp.bg_color);
-                  set('--app-dialog-bg', tp.secondary_bg_color || tp.bg_color);
-                  set('--app-dialog-text', tp.text_color);
-                  set('--app-card-border', tp.text_color);
-              };
-              applyTheme();
-              // Если тема меняется динамически на лету
-              if (typeof window.WebApp.onEvent === 'function') {
-                  window.WebApp.onEvent('themeChanged', applyTheme);
-              }
+        // Сообщаем мессенджеру, что окно загружено, и разворачиваем на весь экран
+        if (typeof window.WebApp.ready === "function") window.WebApp.ready();
+        if (typeof window.WebApp.expand === "function") window.WebApp.expand();
+
+        // Принудительно транслируем параметры темы мессенджера в наши CSS-переменные
+        if (window.WebApp.themeParams) {
+          const applyTheme = () => {
+            const tp = window.WebApp.themeParams;
+            const set = (key, val) => {
+              if (val) document.documentElement.style.setProperty(key, val);
+            };
+
+            // Маппинг цветов мессенджера на нашу дизайн-систему
+            set("--app-bg", tp.bg_color);
+            set("--app-text", tp.text_color);
+            set("--app-btn-border", tp.button_color || tp.text_color);
+            set("--app-btn-hover-bg", tp.button_color || tp.text_color);
+            set("--app-btn-hover-text", tp.button_text_color || tp.bg_color);
+            set("--app-dialog-bg", tp.secondary_bg_color || tp.bg_color);
+            set("--app-dialog-text", tp.text_color);
+            set("--app-card-border", tp.text_color);
+          };
+          applyTheme();
+          // Если тема меняется динамически на лету
+          if (typeof window.WebApp.onEvent === "function") {
+            window.WebApp.onEvent("themeChanged", applyTheme);
           }
+        }
       }
     </script>
   </head>
@@ -67,14 +73,22 @@
           class="content__logo-image"
         />
       </picture>
-      <button class="button" type="button" onclick="document.getElementById('dialog').show()">
+      <button
+        class="button"
+        type="button"
+        onclick="document.getElementById('dialog').show()"
+      >
         Сообщить о сбоях в работе
       </button>
       <dialog id="dialog">
-        <button class="button__close" aria-label="Закрыть" onclick="document.getElementById('dialog').close()"></button>
+        <button
+          class="button__close"
+          aria-label="Закрыть"
+          onclick="document.getElementById('dialog').close()"
+        ></button>
         <ul class="dialog__list">
           <li class="dialog__list-item">
-            <script data-b24-form="click/7/y4679j" data-skip-moving="true">
+            <script data-b24-form="click/4/kxuj55" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -84,7 +98,7 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_7.js",
+                "https://b24.egida.ru/upload/crm/form/loader_4_kxuj55.js"
               );
             </script>
             <article class="card card--keeping" tabindex="0" role="button">
@@ -92,7 +106,7 @@
             </article>
           </li>
           <li class="dialog__list-item">
-            <script data-b24-form="click/9/f5kh2j" data-skip-moving="true">
+            <script data-b24-form="click/5/2261uy" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -102,7 +116,7 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_9.js",
+                "https://b24.egida.ru/upload/crm/form/loader_5_2261uy.js"
               );
             </script>
             <article class="card card--production" tabindex="0" role="button">
@@ -110,7 +124,7 @@
             </article>
           </li>
           <li class="dialog__list-item">
-            <script data-b24-form="click/11/b4alx4" data-skip-moving="true">
+            <script data-b24-form="click/6/ambdc1" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -120,7 +134,7 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_11.js",
+                "https://b24.egida.ru/upload/crm/form/loader_6_ambdc1.js"
               );
             </script>
             <article class="card card--aging" tabindex="0" role="button">
@@ -128,7 +142,7 @@
             </article>
           </li>
           <li class="dialog__list-item">
-            <script data-b24-form="click/13/8fauo2" data-skip-moving="true">
+            <script data-b24-form="click/7/1ddtjq" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -138,7 +152,7 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_13.js",
+                "https://b24.egida.ru/upload/crm/form/loader_7_1ddtjq.js"
               );
             </script>
             <article class="card card--storage" tabindex="0" role="button">
@@ -146,7 +160,7 @@
             </article>
           </li>
           <li class="dialog__list-item">
-            <script data-b24-form="click/3/xgsq2k" data-skip-moving="true">
+            <script data-b24-form="click/8/m0evpa" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -156,7 +170,7 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_3.js",
+                "https://b24.egida.ru/upload/crm/form/loader_8_m0evpa.js"
               );
             </script>
             <article class="card card--recycling" tabindex="0" role="button">
@@ -164,7 +178,7 @@
             </article>
           </li>
           <li class="dialog__list-item">
-            <script data-b24-form="click/15/vz3sdu" data-skip-moving="true">
+            <script data-b24-form="click/9/ppwdci" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -174,7 +188,7 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_15.js",
+                "https://b24.egida.ru/upload/crm/form/loader_9_ppwdci.js"
               );
             </script>
             <article class="card card--finished" tabindex="0" role="button">
