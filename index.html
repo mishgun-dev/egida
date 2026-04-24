@@ -1,13 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark light" />
-    <title>EGIDA - Корпоративный портал</title>
+    <title>EGIDA - Портал инженерно-технической поддержки</title>
     <link rel="icon" href="./images/esida.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles/variables.css" />
-    <link rel="stylesheet" href="./styles/light-theme.css" />
+    <link
+      rel="stylesheet"
+      href="./styles/light-theme.css"
+      media="(prefers-color-scheme: light)"
+    />
     <link rel="stylesheet" href="./styles/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,121 +21,74 @@
     />
     <script src="https://st.max.ru/js/max-web-app.js"></script>
     <script>
-      function normalizeHexColor(color) {
-        if (!color || typeof color !== "string") return null;
-        let hex = color.trim().replace("#", "");
-        if (hex.length === 3) {
-          hex = hex.split("").map((ch) => ch + ch).join("");
-        }
-        return /^[0-9a-fA-F]{6}$/.test(hex) ? hex : null;
-      }
-
-      function isLightColor(color) {
-        const hex = normalizeHexColor(color);
-        if (!hex) return null;
-        const r = parseInt(hex.slice(0, 2), 16);
-        const g = parseInt(hex.slice(2, 4), 16);
-        const b = parseInt(hex.slice(4, 6), 16);
-        const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-        return luminance > 0.6;
-      }
-
-      function setAppTheme(themeName) {
-        document.documentElement.setAttribute("data-app-theme", themeName === "dark" ? "dark" : "light");
-      }
-
-      const systemDarkMedia = window.matchMedia("(prefers-color-scheme: dark)");
-      setAppTheme(systemDarkMedia.matches ? "dark" : "light");
-      if (typeof systemDarkMedia.addEventListener === "function") {
-        systemDarkMedia.addEventListener("change", (event) => {
-          setAppTheme(event.matches ? "dark" : "light");
-        });
-      }
-
       if (window.WebApp) {
-          // Инициализация пользователя
-          if (window.WebApp.initDataUnsafe && window.WebApp.initDataUnsafe.user) {
-              let maxUserId = window.WebApp.initDataUnsafe.user.id;
-              let currentUrl = new URL(window.location.href);
-              currentUrl.searchParams.set('max_id', maxUserId);
-              window.history.replaceState(null, '', currentUrl.toString());
-          }
-          
-          // Сообщаем мессенджеру, что окно загружено, и разворачиваем на весь экран
-          if (typeof window.WebApp.ready === 'function') window.WebApp.ready();
-          if (typeof window.WebApp.expand === 'function') window.WebApp.expand();
+        // Инициализация пользователя
+        if (window.WebApp.initDataUnsafe && window.WebApp.initDataUnsafe.user) {
+          let maxUserId = window.WebApp.initDataUnsafe.user.id;
+          let currentUrl = new URL(window.location.href);
+          currentUrl.searchParams.set("max_id", maxUserId);
+          window.history.replaceState(null, "", currentUrl.toString());
+        }
 
-          // Принудительно транслируем параметры темы мессенджера в наши CSS-переменные
-          if (window.WebApp.themeParams) {
-              const applyTheme = () => {
-                  const tp = window.WebApp.themeParams;
-                  const set = (key, val) => { if(val) document.documentElement.style.setProperty(key, val); };
-                  
-                  // Маппинг цветов мессенджера на нашу дизайн-систему
-                  set('--app-bg', tp.bg_color);
-                  set('--app-text', tp.text_color);
-                  set('--app-btn-border', tp.button_color || tp.text_color);
-                  set('--app-btn-hover-bg', tp.button_color || tp.text_color);
-                  set('--app-btn-hover-text', tp.button_text_color || tp.bg_color);
-                  set('--app-dialog-bg', tp.secondary_bg_color || tp.bg_color);
-                  set('--app-dialog-text', tp.text_color);
-                  set('--app-card-border', tp.text_color);
+        // Сообщаем мессенджеру, что окно загружено, и разворачиваем на весь экран
+        if (typeof window.WebApp.ready === "function") window.WebApp.ready();
+        if (typeof window.WebApp.expand === "function") window.WebApp.expand();
 
-                  const lightByBg = isLightColor(tp.bg_color);
-                  if (lightByBg !== null) {
-                    setAppTheme(lightByBg ? "light" : "dark");
-                  }
-              };
-              applyTheme();
-              // Если тема меняется динамически на лету
-              if (typeof window.WebApp.onEvent === 'function') {
-                  window.WebApp.onEvent('themeChanged', applyTheme);
-              }
+        // Принудительно транслируем параметры темы мессенджера в наши CSS-переменные
+        if (window.WebApp.themeParams) {
+          const applyTheme = () => {
+            const tp = window.WebApp.themeParams;
+            const set = (key, val) => {
+              if (val) document.documentElement.style.setProperty(key, val);
+            };
+
+            // Маппинг цветов мессенджера на нашу дизайн-систему
+            set("--app-bg", tp.bg_color);
+            set("--app-text", tp.text_color);
+            set("--app-btn-border", tp.button_color || tp.text_color);
+            set("--app-btn-hover-bg", tp.button_color || tp.text_color);
+            set("--app-btn-hover-text", tp.button_text_color || tp.bg_color);
+            set("--app-dialog-bg", tp.secondary_bg_color || tp.bg_color);
+            set("--app-dialog-text", tp.text_color);
+            set("--app-card-border", tp.text_color);
+          };
+          applyTheme();
+          // Если тема меняется динамически на лету
+          if (typeof window.WebApp.onEvent === "function") {
+            window.WebApp.onEvent("themeChanged", applyTheme);
           }
+        }
       }
     </script>
   </head>
   <body>
+    <header class="header">
+      <h1 class="header__heading">Портал инженерно-технической поддержки</h1>
+    </header>
     <main class="content">
-
-      <!-- Страница: Главная -->
-      <section class="page page--home page--active" id="page-home">
-        <picture class="content__logo">
-          <img
-            src="./images/esida.svg"
-            alt="Логотип"
-            class="content__logo-image"
-          />
-          <h1 class="content__hero-title">Корпоративный портал</h1>
-        </picture>
-        <section class="home-panel" aria-labelledby="my-requests-title">
-          <div class="home-panel__header">
-            <h2 class="home-panel__title" id="my-requests-title">Мои заявки</h2>
-            <button class="home-panel__refresh" id="refresh-my-requests" type="button" onclick="return window.handleRefreshMyRequests(event)" aria-label="Обновить список заявок">
-              Обновить
-            </button>
-          </div>
-          <ul class="requests-list" id="my-requests-list" aria-live="polite"></ul>
-        </section>
-        <section class="home-panel" aria-labelledby="news-title">
-          <div class="home-panel__header">
-            <div class="home-panel__headline">
-              <h2 class="home-panel__title" id="news-title">Новости</h2>
-              <p class="home-panel__caption">Лента корпоративного канала Bitrix</p>
-            </div>
-            <button class="home-panel__refresh" id="refresh-news" type="button" onclick="return window.handleRefreshNews(event)" aria-label="Обновить новости">
-              Обновить
-            </button>
-          </div>
-          <ul class="news-list" id="news-list" aria-live="polite"></ul>
-        </section>
-      </section>
-
-      <!-- Страница: ИТР -->
-      <section class="page page--itr" id="page-itr">
-        <ul class="cards-list">
-          <li class="cards-list__item">
-            <script data-b24-form="click/7/y4679j" data-skip-moving="true">
+      <picture class="content__logo">
+        <img
+          src="./images/esida.svg"
+          alt="Логотип"
+          class="content__logo-image"
+        />
+      </picture>
+      <button
+        class="button"
+        type="button"
+        onclick="document.getElementById('dialog').show()"
+      >
+        Сообщить о сбоях в работе
+      </button>
+      <dialog id="dialog">
+        <button
+          class="button__close"
+          aria-label="Закрыть"
+          onclick="document.getElementById('dialog').close()"
+        ></button>
+        <ul class="dialog__list">
+          <li class="dialog__list-item">
+            <script data-b24-form="click/4/kxuj55" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -141,15 +98,15 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_7.js",
+                "https://b24.egida.ru/upload/crm/form/loader_4_kxuj55.js"
               );
             </script>
             <article class="card card--keeping" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 1. Хранение сырья</h2>
             </article>
           </li>
-          <li class="cards-list__item">
-            <script data-b24-form="click/9/f5kh2j" data-skip-moving="true">
+          <li class="dialog__list-item">
+            <script data-b24-form="click/5/2261uy" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -159,15 +116,15 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_9.js",
+                "https://b24.egida.ru/upload/crm/form/loader_5_2261uy.js"
               );
             </script>
             <article class="card card--production" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 2. Изготовление ППУ</h2>
             </article>
           </li>
-          <li class="cards-list__item">
-            <script data-b24-form="click/11/b4alx4" data-skip-moving="true">
+          <li class="dialog__list-item">
+            <script data-b24-form="click/6/ambdc1" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -177,15 +134,15 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_11.js",
+                "https://b24.egida.ru/upload/crm/form/loader_6_ambdc1.js"
               );
             </script>
             <article class="card card--aging" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 3. Вызревание</h2>
             </article>
           </li>
-          <li class="cards-list__item">
-            <script data-b24-form="click/13/8fauo2" data-skip-moving="true">
+          <li class="dialog__list-item">
+            <script data-b24-form="click/7/1ddtjq" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -195,15 +152,15 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_13.js",
+                "https://b24.egida.ru/upload/crm/form/loader_7_1ddtjq.js"
               );
             </script>
             <article class="card card--storage" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 4. Хранение готовых блоков</h2>
             </article>
           </li>
-          <li class="cards-list__item">
-            <script data-b24-form="click/3/xgsq2k" data-skip-moving="true">
+          <li class="dialog__list-item">
+            <script data-b24-form="click/8/m0evpa" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -213,15 +170,15 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_3.js",
+                "https://b24.egida.ru/upload/crm/form/loader_8_m0evpa.js"
               );
             </script>
             <article class="card card--recycling" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 5. Переработка ППУ</h2>
             </article>
           </li>
-          <li class="cards-list__item">
-            <script data-b24-form="click/15/vz3sdu" data-skip-moving="true">
+          <li class="dialog__list-item">
+            <script data-b24-form="click/9/ppwdci" data-skip-moving="true">
               (function (w, d, u) {
                 var s = d.createElement("script");
                 s.async = true;
@@ -231,489 +188,15 @@
               })(
                 window,
                 document,
-                "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_15.js",
+                "https://b24.egida.ru/upload/crm/form/loader_9_ppwdci.js"
               );
             </script>
             <article class="card card--finished" tabindex="0" role="button">
               <h2 class="card__heading">Цех № 6. Хранение продукции</h2>
             </article>
           </li>
-          <li class="cards-list__item">
-            <article class="card card--rmm" tabindex="0" role="button">
-              <h2 class="card__heading">РММ</h2>
-            </article>
-          </li>
         </ul>
-      </section>
-
-      <!-- Страница: HR -->
-      <section class="page page--hr" id="page-hr">
-        <section class="hr-panel">
-          <div class="hr-panel__icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
-          </div>
-          <h2 class="hr-panel__title">HR-помощник</h2>
-          <p class="hr-panel__text">Оформление справок, запросов и консультаций отдела управления персоналом и бухгалтерии.</p>
-          <ul class="hr-panel__list">
-            <li>Справки: 2-НДФЛ, о среднем заработке, о стаже, с места работы.</li>
-            <li>Копии документов: трудовая книжка, приказы и доп. соглашения.</li>
-            <li>Отпуск: остаток дней и период отпуска по графику.</li>
-            <li>Вопросы по начислению зарплаты и выплатам отпускных.</li>
-            <li>Характеристики и производственные характеристики для МСЭ.</li>
-            <li>Прочие кадровые вопросы и консультации.</li>
-          </ul>
-          <div class="hr-panel__meta">
-            <p><strong>Срок:</strong> обычно 1 рабочий день, по отдельным запросам до 2 рабочих дней.</p>
-            <p><strong>Формат ответа:</strong> бумажная справка или электронное сообщение.</p>
-          </div>
-          <script data-b24-form="click/17/hrdemo" data-skip-moving="true">
-            (function (w, d, u) {
-              var s = d.createElement("script");
-              s.async = true;
-              s.src = u + "?" + ((Date.now() / 180000) | 0);
-              var h = d.getElementsByTagName("script")[0];
-              h.parentNode.insertBefore(s, h);
-            })(
-              window,
-              document,
-              "https://cdn-ru.bitrix24.ru/b36408792/crm/form/loader_17.js",
-            );
-          </script>
-          <button class="hr-panel__action" type="button">Открыть форму</button>
-          <p class="hr-panel__hint">Если нужно срочно, укажите это в комментарии к заявке.</p>
-        </section>
-      </section>
-
+      </dialog>
     </main>
-
-    <nav class="bottom-nav">
-      <button class="bottom-nav__item bottom-nav__item--active" id="nav-home" type="button" onclick="navigateTo('home')">
-        <span class="bottom-nav__icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 10.5L12 3l9 7.5" />
-            <path d="M5 9.5V21h14V9.5" />
-            <path d="M9 21v-6h6v6" />
-          </svg>
-        </span>
-        <span class="bottom-nav__label">Главная</span>
-      </button>
-      <button class="bottom-nav__item" id="nav-itr" type="button" onclick="navigateTo('itr')">
-        <span class="bottom-nav__icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-          </svg>
-        </span>
-        <span class="bottom-nav__label">ИТР</span>
-      </button>
-      <button class="bottom-nav__item" id="nav-hr" type="button" onclick="navigateTo('hr')">
-        <span class="bottom-nav__icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </span>
-        <span class="bottom-nav__label">HR-помощник</span>
-      </button>
-    </nav>
-
-    <script>
-      const allowedPages = new Set(["home", "itr", "hr"]);
-      const NEWS_PREVIEW_LIMIT = 220;
-      const myRequestsList = document.getElementById("my-requests-list");
-      const newsList = document.getElementById("news-list");
-      const refreshMyRequestsButton = document.getElementById("refresh-my-requests");
-      const refreshNewsButton = document.getElementById("refresh-news");
-      const expandedNewsIds = new Set();
-      let isRefreshingMyRequests = false;
-      let isRefreshingNews = false;
-      let newsItemsState = [];
-
-      function logClientEvent(message, details) {
-        if (typeof console === "undefined" || typeof console.log !== "function") return;
-        if (typeof details === "undefined") {
-          console.log("[EGIDA]", message);
-          return;
-        }
-        console.log("[EGIDA]", message, details);
-      }
-
-      function setRefreshButtonState(button, isLoading, loadingLabel) {
-        if (!button) return;
-        const defaultLabel = button.dataset.defaultLabel || button.textContent.trim() || "Обновить";
-        button.dataset.defaultLabel = defaultLabel;
-        button.disabled = isLoading;
-        button.classList.toggle("home-panel__refresh--loading", isLoading);
-        button.textContent = isLoading ? loadingLabel : defaultLabel;
-      }
-
-      function setPanelLoadingState(button, isLoading) {
-        const panel = button ? button.closest(".home-panel") : null;
-        if (!panel) return;
-        panel.classList.toggle("home-panel--loading", isLoading);
-        panel.setAttribute("aria-busy", isLoading ? "true" : "false");
-      }
-
-      function renderRequestsState(message, mode = "info") {
-        if (!myRequestsList) return;
-        myRequestsList.innerHTML = '<li class="request-item request-item--' + mode + '">' + message + "</li>";
-      }
-
-      function renderNewsState(message, mode = "info") {
-        if (!newsList) return;
-        newsList.innerHTML = '<li class="news-item news-item--' + mode + '">' + escapeHtml(message) + "</li>";
-      }
-
-      function getStatusClass(statusCode) {
-        const code = String(statusCode || "").toUpperCase();
-        if (
-          code.includes("SUCCESS") ||
-          code.includes("WON") ||
-          code.includes("CLOSED") ||
-          code.includes("COMPLETED")
-        ) {
-          return "done";
-        }
-        if (
-          code.includes("FAIL") ||
-          code.includes("LOSE") ||
-          code.includes("CANCEL")
-        ) {
-          return "cancelled";
-        }
-        if (
-          code.includes("NEW") ||
-          code.includes("PROCESS") ||
-          code.includes("PREPARATION")
-        ) {
-          return "progress";
-        }
-        return "default";
-      }
-
-      function escapeHtml(value) {
-        return String(value)
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#039;");
-      }
-
-      function formatDisplayDate(value) {
-        const date = new Date(value);
-        return Number.isNaN(date.getTime()) ? "" : date.toLocaleString("ru-RU");
-      }
-
-      function splitNewsContent(text) {
-        const normalized = String(text || "").replace(/\r/g, "").trim();
-        const lines = normalized
-          .split("\n")
-          .map((line) => line.trim())
-          .filter(Boolean);
-
-        if (lines.length > 1) {
-          return {
-            title: lines[0],
-            body: lines.slice(1).join("\n").trim() || normalized,
-          };
-        }
-
-        return {
-          title: "",
-          body: normalized,
-        };
-      }
-
-      function truncateText(text, maxLength = NEWS_PREVIEW_LIMIT) {
-        const normalized = String(text || "").trim();
-        if (normalized.length <= maxLength) return normalized;
-
-        const slice = normalized.slice(0, maxLength);
-        const lastSpace = slice.lastIndexOf(" ");
-        const cutoff = lastSpace > maxLength * 0.6 ? lastSpace : maxLength;
-        return slice.slice(0, cutoff).trimEnd() + "...";
-      }
-
-      function syncExpandedNewsIds(items) {
-        const nextIds = new Set((Array.isArray(items) ? items : []).map((item) => String(item.id || "")));
-        [...expandedNewsIds].forEach((id) => {
-          if (!nextIds.has(id)) {
-            expandedNewsIds.delete(id);
-          }
-        });
-      }
-
-      function renderNewsItems(items) {
-        newsItemsState = Array.isArray(items) ? items : [];
-        if (!newsList) return;
-
-        syncExpandedNewsIds(newsItemsState);
-
-        newsList.innerHTML = newsItemsState
-          .map((item) => {
-            const newsId = String(item.id || "");
-            const content = splitNewsContent(item.text || "");
-            const isExpanded = expandedNewsIds.has(newsId);
-            const showToggle =
-              content.body.length > NEWS_PREVIEW_LIMIT ||
-              content.body.split("\n").filter(Boolean).length > 4;
-            const visibleText = isExpanded || !showToggle ? content.body : truncateText(content.body);
-
-            return (
-              '<li class="news-item">' +
-              '<div class="news-item__top">' +
-              '<span class="news-item__author">' +
-              escapeHtml(item.author || "Сотрудник") +
-              "</span>" +
-              (item.created_at
-                ? '<time class="news-item__date" datetime="' +
-                  escapeHtml(item.created_at) +
-                  '">' +
-                  escapeHtml(formatDisplayDate(item.created_at)) +
-                  "</time>"
-                : "") +
-              "</div>" +
-              (content.title
-                ? '<p class="news-item__title">' +
-                  escapeHtml(content.title) +
-                  "</p>"
-                : "") +
-              '<p class="news-item__text">' +
-              escapeHtml(visibleText) +
-              "</p>" +
-              (showToggle
-                ? '<button class="news-item__toggle" type="button" data-news-toggle="' +
-                  escapeHtml(newsId) +
-                  '" aria-expanded="' +
-                  (isExpanded ? "true" : "false") +
-                  '">' +
-                  (isExpanded ? "Свернуть" : "Показать полностью") +
-                  "</button>"
-                : "") +
-              "</li>"
-            );
-          })
-          .join("");
-      }
-
-      async function loadMyRequests() {
-        const currentUrl = new URL(window.location.href);
-        const maxId = currentUrl.searchParams.get("max_id");
-        logClientEvent("loadMyRequests:start", { hasMaxId: Boolean(maxId) });
-
-        if (!maxId) {
-          logClientEvent("loadMyRequests:missing-max-id");
-          renderRequestsState("Не найден ID пользователя MAX. Откройте приложение через MAX.");
-          return;
-        }
-
-        renderRequestsState("Загрузка заявок...", "loading");
-
-        try {
-          const response = await fetch("/api/my-requests?max_id=" + encodeURIComponent(maxId), {
-            headers: { Accept: "application/json" },
-          });
-          logClientEvent("loadMyRequests:response", { status: response.status });
-
-          if (!response.ok) {
-            throw new Error("HTTP " + response.status);
-          }
-
-          const payload = await response.json();
-          const requests = Array.isArray(payload.items) ? payload.items : [];
-          logClientEvent("loadMyRequests:items", { count: requests.length, source: payload.source || "unknown" });
-
-          if (!requests.length) {
-            renderRequestsState("Пока нет заявок.");
-            return;
-          }
-
-          myRequestsList.innerHTML = requests
-            .map((item) => {
-              const statusClass = getStatusClass(item.status_code);
-              return (
-                '<li class="request-item">' +
-                '<div class="request-item__top">' +
-                '<span class="request-item__id">#' +
-                escapeHtml(item.id || "—") +
-                "</span>" +
-                '<span class="request-item__status request-item__status--' +
-                statusClass +
-                '">' +
-                escapeHtml(item.status || "Без статуса") +
-                "</span>" +
-                "</div>" +
-                '<p class="request-item__title">' +
-                escapeHtml(item.title || "Без названия") +
-                "</p>" +
-                (item.created_at
-                  ? '<time class="request-item__date" datetime="' +
-                    escapeHtml(item.created_at) +
-                    '">' +
-                    escapeHtml(formatDisplayDate(item.created_at)) +
-                    "</time>"
-                  : "") +
-                "</li>"
-              );
-            })
-            .join("");
-        } catch (error) {
-          logClientEvent("loadMyRequests:error", error && error.message ? error.message : String(error));
-          renderRequestsState("Не удалось загрузить заявки. Попробуйте позже.", "error");
-        }
-      }
-
-      async function loadNews() {
-        logClientEvent("loadNews:start");
-        renderNewsState("Загрузка новостей...", "loading");
-
-        try {
-          const response = await fetch("/api/news", {
-            headers: { Accept: "application/json" },
-          });
-          logClientEvent("loadNews:response", { status: response.status });
-
-          if (!response.ok) {
-            throw new Error("HTTP " + response.status);
-          }
-
-          const payload = await response.json();
-          const items = Array.isArray(payload.items) ? payload.items : [];
-          logClientEvent("loadNews:items", { count: items.length, source: payload.source || "unknown" });
-
-          if (!items.length) {
-            renderNewsState(payload.note || "Пока нет новостей.");
-            return;
-          }
-
-          renderNewsItems(items);
-        } catch (error) {
-          logClientEvent("loadNews:error", error && error.message ? error.message : String(error));
-          renderNewsState("Не удалось загрузить новости. Попробуйте позже.", "error");
-        }
-      }
-
-      async function handleRefreshMyRequests(event) {
-        if (event) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-
-        logClientEvent("refresh-my-requests:click");
-        if (isRefreshingMyRequests) {
-          logClientEvent("refresh-my-requests:skip-in-flight");
-          return false;
-        }
-
-        isRefreshingMyRequests = true;
-        setRefreshButtonState(refreshMyRequestsButton, true, "Обновляем...");
-        setPanelLoadingState(refreshMyRequestsButton, true);
-
-        try {
-          await loadMyRequests();
-        } finally {
-          isRefreshingMyRequests = false;
-          setRefreshButtonState(refreshMyRequestsButton, false, "Обновляем...");
-          setPanelLoadingState(refreshMyRequestsButton, false);
-        }
-
-        return false;
-      }
-
-      async function handleRefreshNews(event) {
-        if (event) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-
-        logClientEvent("refresh-news:click");
-        if (isRefreshingNews) {
-          logClientEvent("refresh-news:skip-in-flight");
-          return false;
-        }
-
-        isRefreshingNews = true;
-        setRefreshButtonState(refreshNewsButton, true, "Обновляем...");
-        setPanelLoadingState(refreshNewsButton, true);
-
-        try {
-          await loadNews();
-        } finally {
-          isRefreshingNews = false;
-          setRefreshButtonState(refreshNewsButton, false, "Обновляем...");
-          setPanelLoadingState(refreshNewsButton, false);
-        }
-
-        return false;
-      }
-
-      window.handleRefreshMyRequests = handleRefreshMyRequests;
-      window.handleRefreshNews = handleRefreshNews;
-      logClientEvent("client-script:ready");
-
-      if (newsList) {
-        newsList.addEventListener("click", (event) => {
-          const toggleButton = event.target.closest("[data-news-toggle]");
-          if (!toggleButton) return;
-
-          const newsId = String(toggleButton.getAttribute("data-news-toggle") || "");
-          if (!newsId) return;
-
-          if (expandedNewsIds.has(newsId)) {
-            expandedNewsIds.delete(newsId);
-          } else {
-            expandedNewsIds.add(newsId);
-          }
-
-          renderNewsItems(newsItemsState);
-        });
-      }
-
-      function normalizePage(pageId) {
-        return allowedPages.has(pageId) ? pageId : "home";
-      }
-
-      function setActivePage(pageId) {
-        document.querySelectorAll(".page").forEach((p) => p.classList.remove("page--active"));
-        document
-          .querySelectorAll(".bottom-nav__item:not([disabled])")
-          .forEach((b) => b.classList.remove("bottom-nav__item--active"));
-
-        const targetPage = document.getElementById("page-" + pageId);
-        if (targetPage) targetPage.classList.add("page--active");
-
-        const targetBtn = document.getElementById("nav-" + pageId);
-        if (targetBtn) targetBtn.classList.add("bottom-nav__item--active");
-      }
-
-      function navigateTo(pageId, options = {}) {
-        const { updateHash = true } = options;
-        const nextPage = normalizePage(pageId);
-
-        setActivePage(nextPage);
-
-        if (updateHash) {
-          const nextHash = "#" + nextPage;
-          if (window.location.hash !== nextHash) {
-            window.history.pushState(null, "", nextHash);
-          }
-        }
-      }
-
-      window.addEventListener("hashchange", () => {
-        navigateTo(window.location.hash.slice(1), { updateHash: false });
-      });
-
-      navigateTo(window.location.hash.slice(1), { updateHash: false });
-      loadMyRequests();
-      loadNews();
-    </script>
   </body>
 </html>
